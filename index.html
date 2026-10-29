@@ -329,7 +329,7 @@ function calc(){
 document.querySelectorAll("#f select,#f input").forEach(e=>e.addEventListener("input",calc));
 document.querySelectorAll("[data-pick]").forEach(a=>a.addEventListener("click",()=>{$("set").value=a.dataset.pick;calc()}));
 $("cp").onclick=async()=>{try{await navigator.clipboard.writeText($("acct").textContent);$("cp").textContent="Copied"}catch(e){$("cp").textContent="Press and hold to copy"}setTimeout(()=>$("cp").textContent="Copy account number",2000)};
-const ENDPOINT="https://formsubmit.co/ajax/techhub641@gmail.com",LIVE=location.protocol.startsWith("http")&&!/claude|anthropic/i.test(location.hostname);
+const BOOKING_EMAIL="techhub641@gmail.com",ENDPOINT="https://formsubmit.co/ajax/"+BOOKING_EMAIL,LIVE=location.protocol.startsWith("http")&&!/claude|anthropic/i.test(location.hostname);
 $("go").onclick=async()=>{
  const nm=$("nm").value.trim(),ph=$("ph").value.trim(),em=$("em").value.trim();
  if(!nm||!ph||!/^\S+@\S+\.\S+$/.test(em)){$("er").textContent="Please add your name, phone number and a valid email so we can confirm your booking.";(!nm?$("nm"):!ph?$("ph"):$("em")).focus();return}
@@ -339,11 +339,11 @@ $("go").onclick=async()=>{
  b.disabled=true;b.textContent="Sending…";
  try{
   if(!LIVE){await new Promise(r=>setTimeout(r,900))}
-  else{const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(data)});const j=await r.json();if(String(j.success)!=="true")throw 0}
+  else{const r=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(data)});const j=await r.json();if(String(j.success)!=="true")throw new Error(j.message||"The server refused the booking")}
   $("ok").textContent="Booking received! We’ve got your details and will email you shortly."+(LIVE?"":" (Preview only: real emails are sent once the site is deployed.)");
   $("pay").hidden=false;$("pay").scrollIntoView({behavior:"smooth",block:"center"});
   b.textContent="Booking sent";
- }catch(e){b.disabled=false;b.textContent="Book my set";$("er").textContent="Sorry, we couldn’t send that. Please try again in a moment."}
+ }catch(e){b.disabled=false;b.textContent="Book my set";$("er").textContent="Sorry, we couldn’t send that. Please try again in a moment."+(e&&e.message?" ("+e.message+")":"")}
 };
 const m=document.querySelector(".menu"),u=$("links");
 m.onclick=()=>{const o=u.classList.toggle("open");m.setAttribute("aria-expanded",o)};
