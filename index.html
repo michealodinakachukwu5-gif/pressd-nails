@@ -329,7 +329,7 @@ function calc(){
 document.querySelectorAll("#f select,#f input").forEach(e=>e.addEventListener("input",calc));
 document.querySelectorAll("[data-pick]").forEach(a=>a.addEventListener("click",()=>{$("set").value=a.dataset.pick;calc()}));
 $("cp").onclick=async()=>{try{await navigator.clipboard.writeText($("acct").textContent);$("cp").textContent="Copied"}catch(e){$("cp").textContent="Press and hold to copy"}setTimeout(()=>$("cp").textContent="Copy account number",2000)};
-const ENDPOINT="https://formsubmit.co/ajax/pressdnails2@gmail.com",LIVE=location.protocol.startsWith("http")&&!/claude|anthropic/i.test(location.hostname);
+const ENDPOINT="https://formsubmit.co/ajax/techhub461@gmail.com",LIVE=location.protocol.startsWith("http")&&!/claude|anthropic/i.test(location.hostname);
 $("go").onclick=async()=>{
  const nm=$("nm").value.trim(),ph=$("ph").value.trim(),em=$("em").value.trim();
  if(!nm||!ph||!/^\S+@\S+\.\S+$/.test(em)){$("er").textContent="Please add your name, phone number and a valid email so we can confirm your booking.";(!nm?$("nm"):!ph?$("ph"):$("em")).focus();return}
